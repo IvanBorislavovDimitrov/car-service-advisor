@@ -1,0 +1,23 @@
+{
+  "name": "basic-car-service-advisor",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "client:dev": "cd client && npm run dev",
+    "server:dev": "cd server && ts-node src/index.ts",
+    "dev": "concurrently \"npm run client:dev\" \"npm run server:dev\"",
+
+    "client:build": "cd client && npm run build",
+    "server:build": "cd server && tsc",
+    "build": "npm run client:build && npm run server:build",
+
+    "start": "node server/dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
