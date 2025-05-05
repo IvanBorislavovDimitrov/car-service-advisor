@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (_req, res) => {
   try {
-    const cars = await CarService.getAllCars(); // or CarRepository.findAll()
+    const cars = await CarService.getAllCars();
     res.json(cars);
   } catch (error) {
     console.error('Error fetching cars:', error);

@@ -1,5 +1,5 @@
 import client from '../db/db';
-import { Car } from '../types/car';
+import { Car } from '../domain/car';
 
 export class CarRepository {
 

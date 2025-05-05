@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { initDb } from './db/db';
 import carRoutes from './route/car-routes';
+import obligationRoutes from './route/obligation-routes';
 
 const app = express();
 const PORT = 3000;
@@ -10,6 +11,7 @@ const PORT = 3000;
 app.use(express.static(path.join(__dirname, '../../client/dist')));
 app.use(express.json());
 app.use('/api/cars', carRoutes);
+app.use('/api/obligations', obligationRoutes);
 
 app.get('/api/hello', (_req, res) => {
     res.json({ message: 'Hello from backend!' });

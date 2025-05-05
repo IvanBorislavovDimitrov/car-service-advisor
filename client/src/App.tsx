@@ -9,15 +9,11 @@ import Home from './components/Home';
 import Navbar from './components/Navbar';
 import CarList from './components/CarList';
 import AddCar from './components/AddCar';
+import ObligationList from './components/ObligationList';
+import AddObligation from './components/AddObligation';
 
 function App() {
   const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    fetch('/api/hello')
-      .then(res => res.json())
-      .then(data => console.log(data));
-  }, []);
 
   return (
     <>
@@ -25,10 +21,14 @@ function App() {
       <div className="container mt-4">
         <Routes>
           <Route path="/" element={<Home />} />
+
           <Route path="/cars" element={<CarList />} />
-          <Route path="/about" element={<h2>ℹ️ About Page</h2>} />
           <Route path="/add-car" element={<AddCar />} />
 
+          <Route path="/obligations" element={<ObligationList />} />
+          <Route path="/add-obligation" element={<AddObligation />} />
+
+          <Route path="/about" element={<h2>ℹ️ About Page</h2>} />
         </Routes>
       </div>
     </>
