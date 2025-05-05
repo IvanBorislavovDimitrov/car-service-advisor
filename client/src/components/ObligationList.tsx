@@ -13,8 +13,8 @@ const ObligationList: React.FC = () => {
           new Obligation(
             o.name,
             o.description,
-            new Date(o.startDate),
-            new Date(o.endDate),
+            new Date(o.start_date), // Use start_date from the API response
+            new Date(o.end_date),   // Use end_date from the API response
             o.status,
             o.car_id,
             o.id

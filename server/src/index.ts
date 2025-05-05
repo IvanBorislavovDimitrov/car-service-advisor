@@ -3,6 +3,7 @@ import path from 'path';
 import { initDb } from './db/db';
 import carRoutes from './route/car-routes';
 import obligationRoutes from './route/obligation-routes';
+import { runObligationCheck } from './cron/obligation-checker';
 
 const app = express();
 const PORT = 3000;
@@ -19,6 +20,7 @@ app.get('/api/hello', (_req, res) => {
 
 initDb().then(() => {
     app.listen(PORT, () => {
+        runObligationCheck(); // Run once immediately on startup
         console.log(`🚀 Server running at http://localhost:${PORT}`);
     });
 }).catch(err => {
