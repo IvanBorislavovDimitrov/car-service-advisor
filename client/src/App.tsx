@@ -1,10 +1,6 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import CarList from './components/CarList';
@@ -13,7 +9,6 @@ import ObligationList from './components/ObligationList';
 import AddObligation from './components/AddObligation';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
