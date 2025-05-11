@@ -16,7 +16,12 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/express": "^5.0.1",
     "concurrently": "^9.1.2",
-    "typescript": "^5.0.0"
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
   }
 }

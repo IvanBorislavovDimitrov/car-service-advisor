@@ -68,11 +68,11 @@ const AddObligation: React.FC = () => {
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Start Date</label>
-                    <input type="date" name="startDate" className="form-control" value={obligation.startDate.toISOString().split('T')[0]} onChange={handleChange} required />
+                    <input type="date" name="startDate" className="form-control" value={new Date(obligation.startDate).toISOString().split('T')[0]} onChange={handleChange} required />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">End Date</label>
-                    <input type="date" name="endDate" className="form-control" value={obligation.endDate.toISOString().split('T')[0]} onChange={handleChange} required />
+                    <input type="date" name="endDate" className="form-control" value={new Date(obligation.endDate).toISOString().split('T')[0]} onChange={handleChange} required />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Status</label>
