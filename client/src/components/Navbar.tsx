@@ -23,6 +23,11 @@ const Navbar: React.FC = () => {
                         </NavLink>
                     </li>
                     <li className="nav-item">
+                        <NavLink to="/owners" className="nav-link">
+                            Owners
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
                         <NavLink to="/cars" className="nav-link">
                             Cars
                         </NavLink>
@@ -37,6 +42,7 @@ const Navbar: React.FC = () => {
                             About
                         </NavLink>
                     </li>
+
                 </ul>
             </div>
         </nav>

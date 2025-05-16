@@ -4,12 +4,14 @@ export class Car {
     model: string;
     vin: string;
     mileage: number;
+    ownerId?: number;
 
-    constructor(brand: string, model: string, vin: string, mileage: number, id?: number) {
+    constructor(brand: string, model: string, vin: string, mileage: number, ownerId?: number, id?: number) {
         this.id = id;
         this.brand = brand;
         this.model = model;
         this.vin = vin;
         this.mileage = mileage;
+        this.ownerId = ownerId;
     }
 }

@@ -4,10 +4,10 @@ import { Car } from '../domain/car';
 export class CarRepository {
 
   static async create(car: Car): Promise<Car> {
-    const { brand, model, vin, mileage } = car;
+    const { brand, model, vin, mileage, ownerId } = car;
     const result = await client.query(
-      'INSERT INTO car (brand, model, vin, mileage) VALUES ($1, $2, $3, $4) RETURNING *',
-      [brand, model, vin, mileage]
+      'INSERT INTO car (brand, model, vin, mileage, owner_id) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [brand, model, vin, mileage, ownerId]
     );
     return result.rows[0];
   }

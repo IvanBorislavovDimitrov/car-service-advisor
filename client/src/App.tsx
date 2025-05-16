@@ -7,6 +7,8 @@ import CarList from './components/CarList';
 import AddCar from './components/AddCar';
 import ObligationList from './components/ObligationList';
 import AddObligation from './components/AddObligation';
+import AddOwner from './components/AddOwner';
+import OwnerList from './components/OwnerList';
 
 function App() {
 
@@ -19,6 +21,9 @@ function App() {
 
           <Route path="/cars" element={<CarList />} />
           <Route path="/add-car" element={<AddCar />} />
+
+          <Route path="/owners" element={<OwnerList />} />
+          <Route path="/add-owner" element={<AddOwner />} />
 
           <Route path="/obligations" element={<ObligationList />} />
           <Route path="/add-obligation" element={<AddObligation />} />
