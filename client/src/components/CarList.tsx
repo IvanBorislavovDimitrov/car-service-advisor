@@ -1,31 +1,55 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Car } from '../model/car';
+import { CarOwner } from '../model/car-owner';
 
 const CarList: React.FC = () => {
     const navigate = useNavigate();
     const [cars, setCars] = useState<Car[]>([]);
+    const [owners, setOwners] = useState<CarOwner[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        const fetchCars = async () => {
+        const fetchData = async () => {
             try {
-                const response = await fetch('/api/cars');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch cars');
+                const [carsRes, ownersRes] = await Promise.all([
+                    fetch('/api/cars'),
+                    fetch('/api/cars/owners')
+                ]);
+                if (!carsRes.ok || !ownersRes.ok) {
+                    throw new Error('Failed to fetch cars or owners');
                 }
-                const data: Car[] = await response.json();
-                setCars(data);
+                const carsDataRaw: any[] = await carsRes.json();
+                // Map snake_case to camelCase for Car
+                const carsData: Car[] = carsDataRaw.map(c => ({
+                    ...c,
+                    ownerId: c.owner_id
+                }));
+                const ownersRaw: any[] = await ownersRes.json();
+                // Map snake_case to camelCase for CarOwner
+                const ownersData: CarOwner[] = ownersRaw.map(o => ({
+                    id: o.id,
+                    firstName: o.first_name,
+                    lastName: o.last_name,
+                    email: o.email
+                }));
+                setCars(carsData);
+                setOwners(ownersData);
             } catch (error) {
-                console.error('Error fetching cars:', error);
-                alert('Could not fetch cars');
+                console.error('Error fetching cars or owners:', error);
+                alert('Could not fetch cars or owners');
             } finally {
                 setLoading(false);
             }
         };
-
-        fetchCars();
+        fetchData();
     }, []);
+
+    // Helper to get owner email by ownerId
+    const getOwnerEmail = (ownerId?: number) => {
+        const owner = owners.find(o => o.id === ownerId);
+        return owner ? owner.email : '';
+    };
 
     return (
         <div className="container mt-4">
@@ -46,12 +70,13 @@ const CarList: React.FC = () => {
                             <th>Model</th>
                             <th>VIN</th>
                             <th>Mileage</th>
+                            <th>Owner Email</th>
                         </tr>
                     </thead>
                     <tbody>
                         {cars.length === 0 ? (
                             <tr>
-                                <td colSpan={5} className="text-center">No cars found.</td>
+                                <td colSpan={6} className="text-center">No cars found.</td>
                             </tr>
                         ) : (
                             cars.map((car, index) => (
@@ -61,6 +86,7 @@ const CarList: React.FC = () => {
                                     <td>{car.model}</td>
                                     <td>{car.vin}</td>
                                     <td>{car.mileage}</td>
+                                    <td>{getOwnerEmail(car.ownerId)}</td>
                                 </tr>
                             ))
                         )}
