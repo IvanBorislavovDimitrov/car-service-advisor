@@ -13,7 +13,7 @@ export class CarRepository {
   }
 
   static async findAll(): Promise<Car[]> {
-    const result = await client.query('SELECT * FROM car ORDER BY id DESC');
+    const result = await client.query('SELECT * FROM car ORDER BY id ASC');
     return result.rows;
   }
 }

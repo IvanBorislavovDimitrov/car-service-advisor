@@ -14,7 +14,7 @@ export class ObligationRepository {
     }
 
     static async findAll(): Promise<Obligation[]> {
-        const result = await client.query('SELECT * FROM obligation ORDER BY id DESC');
+        const result = await client.query('SELECT * FROM obligation ORDER BY id ASC');
         return result.rows;
     }
 

@@ -9,6 +9,7 @@ import ObligationList from './components/ObligationList';
 import AddObligation from './components/AddObligation';
 import AddOwner from './components/AddOwner';
 import OwnerList from './components/OwnerList';
+import EditOwner from './components/EditOwner';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
 
           <Route path="/owners" element={<OwnerList />} />
           <Route path="/add-owner" element={<AddOwner />} />
+          <Route path="/edit-owner/:id" element={<EditOwner />} />
 
           <Route path="/obligations" element={<ObligationList />} />
           <Route path="/add-obligation" element={<AddObligation />} />

@@ -48,6 +48,7 @@ const OwnerList: React.FC = () => {
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -57,6 +58,11 @@ const OwnerList: React.FC = () => {
                 <td>{owner.firstName}</td>
                 <td>{owner.lastName}</td>
                 <td>{owner.email}</td>
+                <td>
+                  <Link to={`/edit-owner/${owner.id}`} className="btn btn-sm btn-warning">
+                    Edit
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>

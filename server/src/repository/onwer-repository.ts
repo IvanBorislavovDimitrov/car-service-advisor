@@ -17,7 +17,7 @@ export class OwnerRepository {
   }
 
   static async findAll(): Promise<CarOwner[]> {
-    const result = await client.query('SELECT * FROM car_owner ORDER BY id DESC');
+    const result = await client.query('SELECT * FROM car_owner ORDER BY id ASC');
     return result.rows;
   }
 

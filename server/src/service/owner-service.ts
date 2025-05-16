@@ -9,4 +9,12 @@ export class OwnerService {
   static async createOwner(owner: CarOwner): Promise<CarOwner> {
     return OwnerRepository.create(owner);
   }
+
+  static async updateOwner(id: number, updates: Partial<CarOwner>): Promise<CarOwner | null> {
+    return OwnerRepository.update(id, updates);
+  }
+
+  static async getOwnerById(id: number): Promise<CarOwner | null> {
+    return OwnerRepository.findById(id);
+  }
 }
