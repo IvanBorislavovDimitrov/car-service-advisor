@@ -12,9 +12,10 @@ export async function runObligationCheck() {
 
     try {
         const res = await client.query(`
-      SELECT o.*, c.brand, c.model 
+      SELECT o.*, c.brand, c.model, co.email as owner_email
       FROM obligation o
       JOIN car c ON o.car_id = c.id
+      JOIN car_owner co ON c.owner_id = co.id
       WHERE o.end_date <= $1
     `, [nextWeek]);
 
@@ -25,26 +26,26 @@ export async function runObligationCheck() {
             const status = endDate < today ? 'expired' : 'upcoming';
 
             console.log(`📌 Obligation [${row.name}] for car ${row.brand} ${row.model} is ${status}. End date: ${endDate.toDateString()}`);
-            const recipients = (process.env.NOTIFY_EMAIL || 'default@domain.com').split(' ');
-
-            for (const recipient of recipients) {
-                const trimmedRecipient = recipient.trim();
-                try {
-                    await sendNotificationEmail(
-                        trimmedRecipient,
-                        `Obligation ${status.toUpperCase()} Reminder`,
-                        `
-                        <p><strong>Car:</strong> ${row.brand} ${row.model}</p>
-                        <p><strong>Description:</strong> ${row.description}</p>
-                        <p><strong>Obligation:</strong> ${row.name}</p>
-                        <p><strong>Due:</strong> ${endDate.toDateString()}</p>
-                        <p>Status: <strong>${status}</strong></p>
-                        `
-                    );
-                    console.log(`📧 Email sent to ${trimmedRecipient}`);
-                } catch (err) {
-                    console.error(`❌ Failed to send email to ${trimmedRecipient}`, err);
-                }
+            const recipient = row.owner_email;
+            if (!recipient) {
+                console.warn(`⚠️ No owner email found for car ${row.brand} ${row.model}`);
+                continue;
+            }
+            try {
+                await sendNotificationEmail(
+                    recipient,
+                    `Obligation ${status.toUpperCase()} Reminder`,
+                    `
+                    <p><strong>Car:</strong> ${row.brand} ${row.model}</p>
+                    <p><strong>Description:</strong> ${row.description}</p>
+                    <p><strong>Obligation:</strong> ${row.name}</p>
+                    <p><strong>Due:</strong> ${endDate.toDateString()}</p>
+                    <p>Status: <strong>${status}</strong></p>
+                    `
+                );
+                console.log(`📧 Email sent to ${recipient}`);
+            } catch (err) {
+                console.error(`❌ Failed to send email to ${recipient}`, err);
             }
         }
 
