@@ -8,6 +8,7 @@ import AddCar from './components/AddCar';
 import EditCar from './components/EditCar';
 import ObligationList from './components/ObligationList';
 import AddObligation from './components/AddObligation';
+import EditObligation from './components/EditObligation';
 import AddOwner from './components/AddOwner';
 import OwnerList from './components/OwnerList';
 import EditOwner from './components/EditOwner';
@@ -31,6 +32,7 @@ function App() {
 
           <Route path="/obligations" element={<ObligationList />} />
           <Route path="/add-obligation" element={<AddObligation />} />
+          <Route path="/edit-obligation/:id" element={<EditObligation />} />
 
           <Route path="/about" element={<h2>ℹ️ About Page</h2>} />
         </Routes>

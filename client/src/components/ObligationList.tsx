@@ -38,6 +38,7 @@ const ObligationList: React.FC = () => {
             <th>End</th>
             <th>Status</th>
             <th>Car ID</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -49,6 +50,11 @@ const ObligationList: React.FC = () => {
               <td>{o.endDate.toLocaleDateString()}</td>
               <td>{o.status}</td>
               <td>{o.carId}</td>
+              <td>
+                <Link to={`/edit-obligation/${o.id}`} className="btn btn-sm btn-warning">
+                  Edit
+                </Link>
+              </td>
             </tr>
           ))}
         </tbody>

@@ -24,6 +24,12 @@ export class ObligationRepository {
     }
 
     static async update(id: number, obligation: Partial<Obligation>): Promise<Obligation | null> {
+        // Map camelCase to snake_case for DB columns
+        const fieldMap: Record<string, string> = {
+            startDate: 'start_date',
+            endDate: 'end_date',
+            carId: 'car_id',
+        };
         const fields = Object.keys(obligation);
         const values = Object.values(obligation);
 
@@ -31,7 +37,10 @@ export class ObligationRepository {
             throw new Error('No fields to update');
         }
 
-        const setClause = fields.map((field, index) => `${field} = $${index + 2}`).join(', ');
+        const setClause = fields.map((field, index) => {
+            const dbField = fieldMap[field] || field;
+            return `${dbField} = $${index + 2}`;
+        }).join(', ');
         const query = `UPDATE obligation SET ${setClause} WHERE id = $1 RETURNING *`;
 
         const result = await client.query(query, [id, ...values]);
