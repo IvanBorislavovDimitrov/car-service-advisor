@@ -21,4 +21,41 @@ export class CarRepository {
     const result = await client.query('SELECT * FROM car WHERE id = $1', [id]);
     return result.rows[0] || null;
   }
+
+  static async update(id: number, updates: Car): Promise<Car | null> {
+    const { brand, model, vin, mileage, ownerId } = updates;
+    const fields: string[] = [];
+    const values: any[] = [];
+    let idx = 2;
+
+    if (brand !== undefined) {
+      fields.push(`brand = $${idx++}`);
+      values.push(brand);
+    }
+    if (model !== undefined) {
+      fields.push(`model = $${idx++}`);
+      values.push(model);
+    }
+    if (vin !== undefined) {
+      fields.push(`vin = $${idx++}`);
+      values.push(vin);
+    }
+    if (mileage !== undefined) {
+      fields.push(`mileage = $${idx++}`);
+      values.push(mileage);
+    }
+    if (ownerId !== undefined) {
+      fields.push(`owner_id = $${idx++}`);
+      values.push(ownerId);
+    }
+
+    if (fields.length === 0) {
+      throw new Error('No fields to update');
+    }
+
+    const setClause = fields.join(', ');
+    const query = `UPDATE car SET ${setClause} WHERE id = $1 RETURNING *`;
+    const result = await client.query(query, [id, ...values]);
+    return result.rows[0] || null;
+  }
 }

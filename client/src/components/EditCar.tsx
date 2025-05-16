@@ -21,9 +21,21 @@ const EditCar: React.FC = () => {
         if (!carRes.ok) throw new Error('Failed to fetch car');
         if (!ownersRes.ok) throw new Error('Failed to fetch owners');
         const carData = await carRes.json();
-        const ownersData = await ownersRes.json();
-        setCar(carData);
-        setOwners(ownersData);
+        const ownersDataRaw = await ownersRes.json();
+        // Map snake_case to camelCase for Car
+        const car = {
+          ...carData,
+          ownerId: carData.owner_id
+        };
+        // Map snake_case to camelCase for CarOwner
+        const owners = ownersDataRaw.map((o: any) => ({
+          id: o.id,
+          firstName: o.first_name,
+          lastName: o.last_name,
+          email: o.email
+        }));
+        setCar(car);
+        setOwners(owners);
       } catch (err: any) {
         setError(err.message || 'Failed to fetch data');
       } finally {
@@ -52,7 +64,7 @@ const EditCar: React.FC = () => {
         const data = await response.json();
         throw new Error(data.error || 'Failed to update car');
       }
-      navigate('/');
+      navigate('/cars');
     } catch (err: any) {
       setError(err.message);
     }

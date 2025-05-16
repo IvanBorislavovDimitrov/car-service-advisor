@@ -14,4 +14,9 @@ export class CarService {
         // @ts-ignore: findById will be implemented in CarRepository
         return CarRepository.findById(id);
     }
+
+    static async updateCar(id: number, updates: Car): Promise<Car | null> {
+        // @ts-ignore: findById and update will be implemented in CarRepository
+        return CarRepository.update(id, updates);
+    }
 }
