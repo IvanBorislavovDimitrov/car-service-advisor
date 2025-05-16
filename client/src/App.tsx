@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Navbar from './components/Navbar';
 import CarList from './components/CarList';
 import AddCar from './components/AddCar';
+import EditCar from './components/EditCar';
 import ObligationList from './components/ObligationList';
 import AddObligation from './components/AddObligation';
 import AddOwner from './components/AddOwner';
@@ -22,6 +23,7 @@ function App() {
 
           <Route path="/cars" element={<CarList />} />
           <Route path="/add-car" element={<AddCar />} />
+          <Route path="/edit-car/:id" element={<EditCar />} />
 
           <Route path="/owners" element={<OwnerList />} />
           <Route path="/add-owner" element={<AddOwner />} />

@@ -16,4 +16,9 @@ export class CarRepository {
     const result = await client.query('SELECT * FROM car ORDER BY id ASC');
     return result.rows;
   }
+
+  static async findById(id: number): Promise<Car | null> {
+    const result = await client.query('SELECT * FROM car WHERE id = $1', [id]);
+    return result.rows[0] || null;
+  }
 }

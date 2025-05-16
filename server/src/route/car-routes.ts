@@ -79,4 +79,23 @@ router.get('/owners/:id', async (req: Request, res: Response): Promise<void> => 
   }
 });
 
+// Get car by id
+router.get('/:id', (req, res) => {
+  (async () => {
+    try {
+      const id = parseInt(req.params.id, 10);
+      if (isNaN(id)) {
+        return res.status(400).json({ error: 'Invalid car id' });
+      }
+      const car = await CarService.getCarById(id);
+      if (!car) {
+        return res.status(404).json({ error: 'Car not found' });
+      }
+      res.json(car);
+    } catch (error: any) {
+      res.status(400).json({ error: error && error.message ? error.message : 'Failed to fetch car' });
+    }
+  })();
+});
+
 export default router;

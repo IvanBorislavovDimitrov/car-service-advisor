@@ -71,12 +71,13 @@ const CarList: React.FC = () => {
                             <th>VIN</th>
                             <th>Mileage</th>
                             <th>Owner Email</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {cars.length === 0 ? (
                             <tr>
-                                <td colSpan={6} className="text-center">No cars found.</td>
+                                <td colSpan={7} className="text-center">No cars found.</td>
                             </tr>
                         ) : (
                             cars.map((car, index) => (
@@ -87,6 +88,14 @@ const CarList: React.FC = () => {
                                     <td>{car.vin}</td>
                                     <td>{car.mileage}</td>
                                     <td>{getOwnerEmail(car.ownerId)}</td>
+                                    <td>
+                                        <button
+                                            className="btn btn-sm btn-warning"
+                                            onClick={() => navigate(`/edit-car/${car.id}`)}
+                                        >
+                                            Edit
+                                        </button>
+                                    </td>
                                 </tr>
                             ))
                         )}
